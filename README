@@ -1,0 +1,23 @@
+This code is used to generate HLS code for 3 layered convolutional neural network in Vivado 2014 version.
+
+SOLN is the keyword
+
+it determines the directory in the params directory which contains a design specific inputs also, design specific outputs can be store in the same directory.
+
+There is no streamlined way to synthesize design from C and report power as the former is done by vivado_hls and the later by vivado. 
+
+so this requires creating two scripts
+1. Generate the verilog files
+2. follow the conventional verilog workflow. (overkill: synthesis will have to be done twice)
+
+
+Workflow is as follows:
+1. use generate_params.sh to generate the params directory structure. 
+-> It generates the params.h file, tb file and constraints file and the input image
+Usage: ./generate_params.sh SOLN
+
+2. user report_power.sh to report power
+-> It creates the necessary project structure and uses vivado_hls to generate the verilog files
+-> uses vivado to report power and output the report in the report directory
+-> copies the reports from the reports directory and stores into the params directory
+Usage: ./report_power.sh SOLN
